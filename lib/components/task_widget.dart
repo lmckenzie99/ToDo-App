@@ -33,6 +33,8 @@ class _TaskWidgetState extends State<TaskWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => TaskModel());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -94,6 +96,9 @@ class _TaskWidgetState extends State<TaskWidget> {
                 valueOrDefault<String>(
                   widget.tasksDoc?.title,
                   'title',
+                ).maybeHandleOverflow(
+                  maxChars: 26,
+                  replacement: '…',
                 ),
                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                       font: GoogleFonts.inter(
